@@ -1,0 +1,95 @@
+services:
+  uk1:
+      image: yugabytedb/yugabyte:latest
+      container_name: uk1
+      hostname: uk1
+      volumes:
+        - ${PWD}/storage/uk1:/mnt/volume
+      command: tail -f /dev/null
+      privileged: true
+      networks:
+        - uknet
+
+  uk2:
+      image: yugabytedb/yugabyte:latest
+      container_name: uk2
+      hostname: uk2
+      volumes:
+        - ${PWD}/storage/uk2:/mnt/volume
+      command: tail -f /dev/null
+      privileged: true
+      depends_on:
+        - uk1
+      networks:
+        - uknet
+
+  uk3:
+      image: yugabytedb/yugabyte:latest
+      container_name: uk3
+      hostname: uk3
+      volumes:
+        - ${PWD}/storage/uk3:/mnt/volume
+      command: tail -f /dev/null
+      privileged: true
+      depends_on:
+        - uk2
+      networks:
+        - uknet
+
+  za1:
+      image: yugabytedb/yugabyte:latest
+      container_name: za1
+      hostname: za1
+      volumes:
+        - ${PWD}/storage/za1:/mnt/volume
+      command: tail -f /dev/null
+      privileged: true
+      networks:
+        - zanet
+
+  za2:
+      image: yugabytedb/yugabyte:latest
+      container_name: za2
+      hostname: za2
+      volumes:
+        - ${PWD}/storage/za2:/mnt/volume
+      command: tail -f /dev/null
+      privileged: true
+      depends_on:
+        - za1
+      networks:
+        - zanet
+
+  za3:
+      image: yugabytedb/yugabyte:latest
+      container_name: za3
+      hostname: za3
+      volumes:
+        - ${PWD}/storage/za3:/mnt/volume
+      depends_on:
+        - za2
+      command: tail -f /dev/null
+      privileged: true
+      networks:
+        - zanet
+
+  router:
+      image: yugabytedb/yugabyte:latest
+      container_name: router
+      hostname: router
+      volumes:
+        - ${PWD}/storage/router:/mnt/volume
+      depends_on:
+        - uk1
+      command: tail -f /dev/null
+      privileged: true
+      networks:
+        - zanet
+        - uknet
+
+    
+
+networks:
+  uknet:
+  zanet:
+
