@@ -14,7 +14,7 @@ You will need:
 
 # Using this
 
-Run `make build` to start it. The `prep.sh` script will create the storage tree directory to handle the 6 servers. It also remove it first.
+Run `make all` to start it. The `prep.sh` script will create the storage tree directory to handle the 6 servers. It also remove it first.
 
 # Parameters
 You might change the params file to change the default fault tolerance config.
